@@ -1,47 +1,51 @@
 package cydeo.step_definitions;
 
-import cydeo.pages.*;
-import cydeo.utilities.*;
-import cydeo.pages.*;
-import io.cucumber.java.en.*;
-import org.junit.*;
+import cydeo.pages.WikiHomePage;
+import cydeo.utilities.Driver;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
+
+import java.security.Key;
 
 public class Wiki_StepDefinitions {
 
-    WikiSearchPage wikiSearchPage = new WikiSearchPage();
+    WikiHomePage wikiHomePage=new WikiHomePage();
 
     @Given("User is on Wikipedia home page")
     public void user_is_on_wikipedia_home_page() {
-        Driver.getDriver().get("https://www.wikipedia.org");
+        Driver.getDriver().get("https://www.wikipedia.org/");
     }
-
     @When("User types {string} in the wiki search box")
-    public void user_types_in_the_wiki_search_box(String string) {
+    public void user_types_in_the_wiki_search_box(String keyword) {
 
-        wikiSearchPage.searchBox.sendKeys(string);
+        wikiHomePage.searchBox.sendKeys(keyword);
+
+    }
+    @And("User clicks wiki search button")
+    public void userClicksWikiSearchButton() {
+        wikiHomePage.searchButton.click();
 
     }
 
-    @When("User clicks wiki search button")
-    public void user_clicks_wiki_search_button() {
-
-        wikiSearchPage.searchButton.click();
-
-    }
     @Then("User sees {string} is in the wiki title")
-    public void user_sees_is_in_the_wiki_title(String string) {
-        //verify actual title contains string (coming from feature file)
-        Assert.assertTrue(Driver.getDriver().getTitle().contains(string));
+    public void user_sees_is_in_the_wiki_title(String keyword) {
 
+        Assert.assertTrue(Driver.getDriver().getTitle().contains(keyword));
     }
+
 
     @Then("User sees {string} is in the main header")
-    public void userSeesSteveJobsIsInTheMainHeader(String string) {
+    public void userSeesIsInTheMainHeader(String keyword) {
 
-        Assert.assertTrue(wikiSearchPage.mainHeader.isDisplayed());
+        Assert.assertTrue(wikiHomePage.header.getText().contains(keyword));
+    }
 
-        Assert.assertTrue(wikiSearchPage.mainHeader.getText().equals(string));
-        //3.06 pm cst
-
+    @Then("User sees {string} is in the image header")
+    public void userSeesIsInTheImageHeader(String keyword) {
+        Assert.assertTrue(wikiHomePage.imageHeader.getText().contains(keyword));
     }
 }

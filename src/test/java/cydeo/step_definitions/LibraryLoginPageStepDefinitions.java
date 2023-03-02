@@ -5,7 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class Login_StepDefinitions {
+public class LibraryLoginPageStepDefinitions {
 
     @When("user enters librarian username")
     public void user_enters_librarian_username() {
@@ -48,3 +48,4 @@ public class Login_StepDefinitions {
 
 
 }
+
